@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ContactList.module.css';
-import * as actions from '../../redux/contact/contact-actions';
+import * as operations from '../../redux/contact/contact.operations';
 import { connect } from 'react-redux';
 
 const ContactList = ({ contact, deleteContact }) => (
@@ -35,19 +35,12 @@ ContactList.propTypes = {
   deleteContact: PropTypes.func,
 };
 
-const getVisibleContact = (allContact, filter) => {
-  const normFilter = filter.toLowerCase();
-
-  return allContact.filter(({ name }) =>
-    name.toLowerCase().includes(normFilter),
-  );
-};
-const mapStateToProps = ({ contacts: { items, filter } }) => ({
-  contact: getVisibleContact(items, filter),
+const mapStateToProps = state => ({
+  contact: state.contacts.items,
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteContact: id => dispatch(actions.deleteContact(id)),
+  deleteContact: id => dispatch(operations.deleteContacts(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
