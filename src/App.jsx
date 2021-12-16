@@ -3,6 +3,9 @@ import ContactList from './components/ContactList/ContactList';
 import ContactEditor from './components/ContactEditor';
 import Filter from './components/Filter';
 import styles from './App.module.css';
+import { connect } from 'react-redux';
+import * as operatimport from './redux/contact/contact.operations';
+
 // import Modal from './components/BackDrop/Modal';
 
 class App extends Component {
@@ -14,11 +17,9 @@ class App extends Component {
   //   this.setState(({showModal}) => ({showModal: !showModal}))
   // }
 
-  deleteContact = contactId => {
-    this.setState(prevState => ({
-      contact: prevState.contact.filter(({ id }) => id !== contactId),
-    }));
-  };
+  componentDidMount() {
+    this.props.fetchContact();
+  }
 
   render() {
     // const { showModal } = this.state;
@@ -49,4 +50,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToPtops = dispatch => ({
+  fetchContact: () => dispatch(operatimport.fetchContact()),
+});
+
+export default connect(null, mapDispatchToPtops)(App);

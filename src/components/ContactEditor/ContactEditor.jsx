@@ -23,7 +23,6 @@ class ContactEditor extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    // this.props.onSubmit(this.state.name, this.state.number);
     if (this.state.name !== '') {
       this.props.addContact(this.state);
       this.reset();
@@ -48,7 +47,7 @@ class ContactEditor extends Component {
           title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
           required
         />
-        <p>Last name</p>
+        <p>Phone number</p>
         <input
           type="tel"
           className={styles.input}

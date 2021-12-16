@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {
   fetchContactRequest,
-  //   fetchContactSuccess,
-  //   fetchContactError,
+  fetchContactSuccess,
+  fetchContactError,
   addContactRequest,
   addContactSuccess,
   addContactError,
@@ -13,14 +13,20 @@ import {
 
 axios.defaults.baseURL = 'https://61b07b553c954f001722a3ec.mockapi.io/contacts';
 
-export const fetchContact = () => dispatch => {
+export const fetchContact = () => async dispatch => {
   dispatch(fetchContactRequest());
-  const qwe = axios.get('/contacts');
-  console.log(qwe);
-  //   axios
-  //     .get('/contacts')
-  //     .then(({ data }) => dispatch(fetchContactSuccess(data)))
-  //     .catch(error => dispatch(fetchContactError(error)));
+
+try {
+  const { data } = await axios.get('/contacts');
+  dispatch(fetchContactSuccess(data));
+} catch (error) {
+  dispatch(fetchContactError(error));
+}
+
+  // axios
+  //   .get('/contacts')
+  //   .then(({ data }) => dispatch(fetchContactSuccess(data)))
+  //   .catch(error => dispatch(fetchContactError(error)));
 };
 
 export const addContact = contactEditorState => dispatch => {
@@ -42,6 +48,6 @@ export const deleteContacts = id => dispatch => {
 
   axios
     .delete(`/contacts/${id}`)
-    .then(({ contactId }) => dispatch(deleteContactSuccess(contactId)))
+    .then(() => dispatch(deleteContactSuccess(id)))
     .catch(error => dispatch(deleteContactError(error)));
 };
