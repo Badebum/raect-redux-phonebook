@@ -5,6 +5,7 @@ import Filter from './components/Filter';
 import styles from './App.module.css';
 import { connect } from 'react-redux';
 import * as operatimport from './redux/contact/contact.operations';
+import {getLoading} from './redux/contact/contact-selector'
 
 // import Modal from './components/BackDrop/Modal';
 
@@ -40,7 +41,7 @@ class App extends Component {
 
         <h1>Phonebook</h1>
         <ContactEditor />
-
+        {this.props.isLoadingTodos && <h1>Loading...</h1>}
         <h2>Contacts</h2>
         <Filter />
 
@@ -50,8 +51,12 @@ class App extends Component {
   }
 }
 
+const mapStateToPromps = state => ({
+  isLoadingTodos: getLoading(state),
+});
+
 const mapDispatchToPtops = dispatch => ({
   fetchContact: () => dispatch(operatimport.fetchContact()),
 });
 
-export default connect(null, mapDispatchToPtops)(App);
+export default connect(mapStateToPromps, mapDispatchToPtops)(App);
